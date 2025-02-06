@@ -1,25 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const SearchBar = () => {
-  const [searchText, setSearchText] = useState("");
+interface Props {
+  searchText: string;
+  setSearchText: Dispatch<SetStateAction<string>>;
+}
+
+const SearchBar = ({ searchText, setSearchText }: Props) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        width: "100%",
-        height: "30px",
-        marginTop: "10%",
-        color: "black",
-      }}
-    >
+    <div className="flex w-full justify-center h-[30px] mt-[10%] text-black">
       <input
-        style={{
-          width: "50%",
-          textAlign: "center",
-        }}
+        className="w-[50%] text-center"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
       ></input>
