@@ -6,14 +6,16 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { title: string } }
 ) {
+  const { title } = await params;
+  console.log(title);
   let book = await prisma.book.findFirst({
     where: {
-      title: params.title,
+      title: title.toLowerCase(),
     },
   });
 
   if (!book)
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+    return NextResponse.json({ error: "Book not found" }, { status: 404 });
 
   return NextResponse.json(book);
 }
