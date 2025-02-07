@@ -6,6 +6,7 @@ import BookFound from "./BookFound";
 import { UserContext } from "../userContext";
 
 export interface Book {
+  id: string;
   title: string;
   author: string;
 }
@@ -13,35 +14,28 @@ export interface Book {
 const page = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const handleSearch = async () => {
     const answer = await fetch(`../api/books/${searchText}`);
-    setCurrentBook(await answer.json());
+    const theBook = await answer.json();
+    console.log(theBook);
+    setCurrentBook(theBook);
   };
 
   const handleAddToList = async () => {
-    const bookToAdd = {
-      title: searchText,
+    console.log(currentBook);
+    const body = {
+      user: user,
+      newId: currentBook?.id,
     };
-
-    try {
-      const response = await fetch("/api/mybooks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookToAdd),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-      } else {
-        console.error("Error adding book:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error adding book:", error);
-    }
+    const response = await fetch("/api/mybooks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
   };
 
   return (

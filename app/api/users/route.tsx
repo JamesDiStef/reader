@@ -3,7 +3,7 @@ import schema from "./schema";
 import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
-  const users = await prisma.userBookList.findFirst();
+  const users = await prisma.user.findMany();
 
   return NextResponse.json(users);
 }
@@ -12,26 +12,24 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   console.log(body);
   const validation = schema.safeParse(body);
-  if (!body.title || !body.author)
+  if (!body.userId)
     return NextResponse.json(validation.error?.errors, { status: 400 });
 
-  const book = await prisma.book.findFirst({
+  const user = await prisma.user.findFirst({
     where: {
-      title: body.title,
-      author: body.author,
+      userId: body.userId,
     },
   });
 
-  if (book)
+  if (user)
     return NextResponse.json(
-      { error: "that book had already been added" },
+      { error: "that user had already been added" },
       { status: 400 }
     );
-  const newUser = await prisma.userBookList.create({
+  const newUser = await prisma.user.create({
     data: {
-      userId: "james",
-      bookIDs: [],
-      books: [prisma.book.findMany()],
+      userId: body.userId,
+      bookList: [],
     },
   });
   return NextResponse.json(newUser, { status: 201 });

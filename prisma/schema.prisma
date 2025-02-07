@@ -11,26 +11,10 @@ model Book {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   title  String
   author String
-  userBookListIDs String[]   @db.ObjectId
-  userBookLists UserBookList[] @relation(fields: [userBookListIDs], references: [id])
 }
 
 model User {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  email     String        @unique
-  name      String
-  bookLists UserBookList[]
-}
-
-model UserBookList {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  bookIDs String[]   @db.ObjectId
-  books     Book[]   @relation(fields: [bookIDs], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@index([userId])
+  userId     String        @unique
+  bookList  String[]
 }

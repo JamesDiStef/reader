@@ -9,8 +9,10 @@ const HomeRedirect = () => {
   const { user, setUser } = useUser();
   const router = useRouter();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setUser(inputValue);
+    const user = await fetch(`/api/users/${inputValue}`);
+    console.log(await user.json());
     router.push("/search");
   };
 
