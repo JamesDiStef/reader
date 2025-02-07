@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { useUser } from "./userContext";
-import BookFound from "./search/BookFound";
+import { useRouter } from "next/navigation";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");
   const { user, setUser } = useUser();
+  const router = useRouter();
 
   const handleSubmit = () => {
     setUser(inputValue);
+    router.push("/search");
   };
 
   return (
