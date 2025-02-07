@@ -1,8 +1,9 @@
 import { z } from "zod";
 
-const schema = z.object({
-  title: z.string().min(3),
-  author: z.string().min(3),
+export const userBookListSchema = z.object({
+  userId: z.string().length(24),
+  bookIDs: z.array(z.string().length(24)),
+  books: z.array(z.string().length(24)),
 });
 
-export default schema;
+export default userBookListSchema;

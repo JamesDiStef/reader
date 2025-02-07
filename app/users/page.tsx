@@ -1,5 +1,11 @@
+"use client";
+
+import { useUser } from "../userContext";
+
 const page = () => {
-  return <div>page</div>;
+  const { user, setUser } = useUser();
+
+  return <div>{user}</div>;
 };
 
 export default page;

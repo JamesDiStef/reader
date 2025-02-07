@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import SearchBar from "./SearchBar";
 import BookFound from "./BookFound";
+import { UserContext } from "../userContext";
 
 export interface Book {
   title: string;
@@ -12,6 +13,7 @@ export interface Book {
 const page = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const user = useContext(UserContext);
 
   const handleSearch = async () => {
     const answer = await fetch(`../api/books/${searchText}`);
@@ -19,13 +21,11 @@ const page = () => {
   };
 
   const handleAddToList = async () => {
-    // Constructing the book object to be posted
     const bookToAdd = {
-      title: searchText, // Assuming you're using the searchText as the book's title
+      title: searchText,
     };
 
     try {
-      // Posting the book to the /api/books endpoint
       const response = await fetch("/api/mybooks", {
         method: "POST",
         headers: {
@@ -36,8 +36,6 @@ const page = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Book added successfully:", data);
-        // Optionally, you can update the UI or notify the user
       } else {
         console.error("Error adding book:", response.statusText);
       }

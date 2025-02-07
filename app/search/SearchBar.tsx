@@ -1,6 +1,7 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
+import { UserContext } from "../userContext";
 
 interface Props {
   searchText: string;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const SearchBar = ({ searchText, setSearchText, handleSearch }: Props) => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="flex flex-col w-full justify-center items-center h-[60px] mt-[7%] text-black">
       <input
