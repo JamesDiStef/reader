@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from "react";
 import SearchBar from "./SearchBar";
-import BookFound from "./BookFound";
+import BookFound from "../components/BookFound";
 import { UserContext } from "../userContext";
 
 export interface Book {
@@ -14,7 +14,7 @@ export interface Book {
 const page = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
-  const { user } = useContext(UserContext);
+  const { user, bookList, setBookList } = useContext(UserContext);
 
   const handleSearch = async () => {
     const answer = await fetch(`../api/books/${searchText}`);
@@ -25,16 +25,14 @@ const page = () => {
 
   const handleAddToList = async () => {
     console.log(currentBook);
-    const body = {
-      user: user,
-      newId: currentBook?.id,
-    };
-    const response = await fetch("/api/mybooks", {
-      method: "POST",
+    const newBookList = [...bookList, currentBook?.id];
+    setBookList(newBookList);
+    const response = await fetch(`/api/users/${user}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(newBookList),
     });
   };
 

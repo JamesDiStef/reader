@@ -23,28 +23,20 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { title: string } }
+  { params }: { params: { userId: string; bookList: string[] } }
 ) {
+  const { userId, bookList } = await params;
+  console.log(bookList);
   const body = await request.json();
-  const validation = schema.safeParse(body);
-  if (!validation.success)
-    return NextResponse.json(validation.error.errors, { status: 400 });
+  // const validation = schema.safeParse(body);
+  // if (!validation.success)
+  //   return NextResponse.json(validation.error.errors, { status: 400 });
 
-  const book = await prisma.book.findFirst({
-    where: {
-      title: params.title,
-    },
-  });
-
-  if (!book)
-    return NextResponse.json({ error: "user not found" }, { status: 404 });
-
-  const updatedUser = await prisma.book.update({
-    where: { id: book.title },
+  const updatedUser = await prisma.user.update({
+    where: { userId: userId },
     data: {
-      title: body.title,
-      author: body.author,
+      bookList: bookList,
     },
   });
-  return NextResponse.json(updatedUser, { status: 201 });
+  return NextResponse.json(updatedUser, { status: 200 });
 }

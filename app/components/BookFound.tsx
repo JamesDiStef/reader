@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Book } from "./page";
+import { Book } from "../search/page";
 import { UserContext } from "../userContext";
 
 interface Props {

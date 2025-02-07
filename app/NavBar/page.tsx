@@ -7,7 +7,7 @@ import { UserContext } from "../userContext";
 
 const NavBar = () => {
   const currentPath = usePathname();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, bookList } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogout = () => {
@@ -43,7 +43,10 @@ const NavBar = () => {
             </Link>
           ))}
           <div className="flex-grow"></div>
-          <div className="mr-5">{user}</div>
+          <div className="mr-5">
+            {user}
+            {bookList.length}
+          </div>
           {user && (
             <button className="mr-5" onClick={handleLogout}>
               Logout
