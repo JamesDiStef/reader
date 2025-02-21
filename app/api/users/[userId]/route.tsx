@@ -1,7 +1,14 @@
 import prisma from "@/prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET({ params }: { params: Promise<{ userId: string }> }) {
+export async function GET(
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ userId: string }>;
+  }
+) {
   const { userId } = await params;
   const user = await prisma.user.findFirst({
     where: {
