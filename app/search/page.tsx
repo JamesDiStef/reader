@@ -25,7 +25,8 @@ const Page = () => {
 
   const handleAddToList = async () => {
     console.log(currentBook);
-    const newBookList = [...bookList, currentBook?.id];
+    let newBookList = [""];
+    if (currentBook) newBookList = [...bookList, currentBook?.id];
     setBookList(newBookList);
     const response = await fetch(`/api/users/${user}`, {
       method: "PUT",

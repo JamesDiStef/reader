@@ -11,7 +11,7 @@ interface UserContextType {
   user: string;
   setUser: Dispatch<SetStateAction<string>>;
   bookList: string[];
-  setBookList: Dispatch<SetStateAction<never[]>>;
+  setBookList: Dispatch<SetStateAction<string[]>>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -27,7 +27,7 @@ interface Props {
 
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState("");
-  const [bookList, setBookList] = useState([]);
+  const [bookList, setBookList] = useState([""]);
 
   return (
     <UserContext.Provider value={{ user, setUser, bookList, setBookList }}>
