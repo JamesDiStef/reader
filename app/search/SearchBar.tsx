@@ -6,11 +6,11 @@ import { UserContext } from "../userContext";
 interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
-  handleSearch: any;
+  handleSearch: () => {};
 }
 
 const SearchBar = ({ searchText, setSearchText, handleSearch }: Props) => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
 
   return (
     <div className="flex flex-col w-full justify-center items-center h-[60px] mt-[7%] text-black">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { UserContext } from "../userContext";
 

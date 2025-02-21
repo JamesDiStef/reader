@@ -7,7 +7,7 @@ interface Props {
 }
 
 const BookFound = ({ book }: Props) => {
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
   return (
     <div className="flex justify-center mt-24 h-full min-h-36 lg:h-[75%]">
       <div className="flex flex-col items-center justify-center bg-slate-300 shadow-lg rounded-lg p-8 w-80 border-l-[22px] border-black">

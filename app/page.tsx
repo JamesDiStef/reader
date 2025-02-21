@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");
-  const { user, setUser, bookList, setBookList } = useUser();
+  const { user, setUser, setBookList } = useUser();
   const router = useRouter();
 
   const handleSubmit = async () => {
     setUser(inputValue);
     const user = await fetch(`/api/users/${inputValue}`);
     const user2 = await user.json();
-    const books = user2.bookList;
-    setBookList([books]);
+    // const books = user2.bookList;
+    // setBookList([books]);
     router.push("/search");
   };
 

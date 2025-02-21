@@ -3,7 +3,7 @@
 import BookFound from "../components/BookFound";
 import { useUser } from "../userContext";
 
-const page = () => {
+const Page = () => {
   const { user, bookList } = useUser();
   console.log(user);
 
@@ -16,4 +16,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

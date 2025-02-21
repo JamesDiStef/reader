@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log(body);
   const validation = schema.safeParse(body);
   if (!body.userId)
     return NextResponse.json(validation.error?.errors, { status: 400 });

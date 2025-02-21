@@ -11,7 +11,7 @@ export interface Book {
   author: string;
 }
 
-const page = () => {
+const Page = () => {
   const [searchText, setSearchText] = useState("");
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
   const { user, bookList, setBookList } = useContext(UserContext);
@@ -58,4 +58,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
