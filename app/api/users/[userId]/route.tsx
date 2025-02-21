@@ -27,7 +27,7 @@ export async function PUT(
   {
     params,
   }: {
-    params: { userId: string; bookList: string[] };
+    params: Promise<{ userId: string; bookList: string[] }>;
   }
 ) {
   const { userId, bookList } = await params;
