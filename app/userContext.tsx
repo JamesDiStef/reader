@@ -1,10 +1,24 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  SetStateAction,
+  Dispatch,
+} from "react";
 
-export const UserContext = createContext({
+interface UserContextType {
+  user: string;
+  setUser: Dispatch<SetStateAction<string>>;
+  bookList: string[];
+  setBookList: Dispatch<SetStateAction<never[]>>;
+}
+
+export const UserContext = createContext<UserContextType>({
   user: "",
-  setUser: (_a: string) => {},
+  setUser: () => {},
   bookList: [],
-  setBookList: (_a: []) => {},
+  setBookList: () => {},
 });
 
 interface Props {
