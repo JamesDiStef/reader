@@ -1,10 +1,7 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function GET({ params }: { params: { userId: string } }) {
   const { userId } = await params;
   const user = await prisma.user.findFirst({
     where: {
@@ -18,10 +15,11 @@ export async function GET(
   return NextResponse.json(user);
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { userId: string; bookList: string[] } }
-) {
+export async function PUT({
+  params,
+}: {
+  params: { userId: string; bookList: string[] };
+}) {
   const { userId, bookList } = await params;
   // const body = await request.json();
   // const validation = schema.safeParse(body);

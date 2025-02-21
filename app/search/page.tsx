@@ -34,6 +34,7 @@ const Page = () => {
       },
       body: JSON.stringify(newBookList),
     });
+    console.log(response);
   };
 
   return (

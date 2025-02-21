@@ -1,12 +1,11 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useContext } from "react";
-import { UserContext } from "../userContext";
+import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
-  handleSearch: () => {};
+  handleSearch: () => unknown;
 }
 
 const SearchBar = ({ searchText, setSearchText, handleSearch }: Props) => {
