@@ -22,11 +22,14 @@ export async function GET(
   return NextResponse.json(user);
 }
 
-export async function PUT({
-  params,
-}: {
-  params: { userId: string; bookList: string[] };
-}) {
+export async function PUT(
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: { userId: string; bookList: string[] };
+  }
+) {
   const { userId, bookList } = await params;
   // const body = await request.json();
   // const validation = schema.safeParse(body);
