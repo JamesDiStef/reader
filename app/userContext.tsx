@@ -2,12 +2,16 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 export const UserContext = createContext({
   user: "",
-  setUser: (arg: any) => {},
+  setUser: (_a: string) => {},
   bookList: [],
-  setBookList: (arg: any) => {},
+  setBookList: (_a: []) => {},
 });
 
-export const UserProvider = ({ children }: any) => {
+interface Props {
+  children: ReactNode;
+}
+
+export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState("");
   const [bookList, setBookList] = useState([]);
 
