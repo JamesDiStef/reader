@@ -22,7 +22,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { title: string } }
+  { params }: { params: Promise<{ title: string }> }
 ) {
   const body = await request.json();
   const validation = schema.safeParse(body);
@@ -31,7 +31,7 @@ export async function PUT(
 
   const book = await prisma.book.findFirst({
     where: {
-      title: params.title,
+      title: (await params).title,
     },
   });
 
@@ -50,11 +50,11 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { title: string } }
+  { params }: { params: Promise<{ title: string }> }
 ) {
   const book = await prisma.book.findFirst({
     where: {
-      title: params.title,
+      title: (await params).title,
     },
   });
   if (!book)
