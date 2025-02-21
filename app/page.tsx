@@ -12,9 +12,10 @@ const HomeRedirect = () => {
   const handleSubmit = async () => {
     setUser(inputValue);
     const user = await fetch(`/api/users/${inputValue}`);
-    // const user2 = await user.json();
-    // const books = user2.bookList;
+    const user2 = await user.json();
+    const books = user2.bookList;
     // setBookList([books]);
+    console.log(books);
     router.push("/search");
   };
 
