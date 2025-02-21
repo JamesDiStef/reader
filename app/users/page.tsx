@@ -10,7 +10,7 @@ const Page = () => {
   return (
     <div>
       {bookList.map((b) => (
-        <BookFound key={b} book={b} />
+        <BookFound key={b.id} book={b} />
       ))}
     </div>
   );
