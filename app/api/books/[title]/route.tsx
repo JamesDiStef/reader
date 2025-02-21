@@ -4,7 +4,7 @@ import schema from "../schema";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { title: string } }
+  { params }: { params: Promise<{ title: string }> }
 ) {
   const { title } = await params;
   console.log(title);
