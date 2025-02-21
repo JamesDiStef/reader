@@ -2,7 +2,10 @@ import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import schema from "../schema";
 
-export async function GET({ params }: { params: { title: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { title: string } }
+) {
   const { title } = await params;
   console.log(title);
   const book = await prisma.book.findFirst({
