@@ -7,7 +7,7 @@ import { UserContext } from "../userContext";
 
 const NavBar = () => {
   const currentPath = usePathname();
-  const { user, setUser, bookList } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogout = () => {

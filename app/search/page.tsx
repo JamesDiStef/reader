@@ -36,7 +36,7 @@ const Page = () => {
     let newBookList: Book[] = [];
     if (currentBooks !== null) newBookList = [...bookList, b];
     setBookList(newBookList);
-    const response = await fetch(`/api/users/${user}`, {
+    await fetch(`/api/users/${user}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

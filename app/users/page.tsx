@@ -4,12 +4,13 @@ import BookFound from "../components/BookFound";
 import { useUser } from "../userContext";
 
 const Page = () => {
-  const { user, bookList } = useUser();
+  const { bookList } = useUser();
+  let count = 0;
 
   return (
     <div>
       {bookList.map((b) => (
-        <BookFound key={b.id} book={b} />
+        <BookFound key={count++} book={b} />
       ))}
     </div>
   );
