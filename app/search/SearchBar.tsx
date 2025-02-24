@@ -9,8 +9,6 @@ interface Props {
 }
 
 const SearchBar = ({ searchText, setSearchText, handleSearch }: Props) => {
-  // const { user } = useContext(UserContext);
-
   return (
     <div className="flex flex-col w-full justify-center items-center h-[60px] mt-[7%] text-black">
       <input

@@ -32,6 +32,10 @@ const Page = () => {
     handlePageLoad();
   }, []);
 
+  useEffect(() => {
+    handleSearch();
+  }, [searchText]);
+
   const handleAddToList = async (b: Book) => {
     let newBookList: Book[] = [];
     if (currentBooks !== null) newBookList = [...bookList, b];
