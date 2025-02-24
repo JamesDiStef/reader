@@ -3,17 +3,23 @@
 import { useState } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/navigation";
+import { Book } from "./search/page";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");
-  const { setUser, bookList, setBookList } = useUser();
+  const { setUser, setBookList } = useUser();
   const router = useRouter();
 
   const handleSubmit = async () => {
     setUser(inputValue);
     const user = await fetch(`/api/users/${inputValue}`);
     const user2 = await user.json();
-    const books = user2.bookList;
+    const bookIds = user2.bookList;
+    const books: Book[] = [];
+    for (let i = 0; i < bookIds?.length; i++) {
+      const book = await fetch(`/api/booksById/${bookIds[i]}`);
+      books.push(await book.json());
+    }
     setBookList([...books]);
     router.push("/search");
   };

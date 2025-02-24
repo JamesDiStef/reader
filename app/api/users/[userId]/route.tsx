@@ -1,3 +1,4 @@
+import { Book } from "@/app/search/page";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -27,20 +28,27 @@ export async function PUT(
   {
     params,
   }: {
-    params: Promise<{ userId: string; bookList: string[] }>;
+    params: Promise<{ userId: string }>;
   }
 ) {
-  const { userId, bookList } = await params;
+  const { userId } = await params;
+  const bookList = await request.json();
+
+  console.log(bookList);
   // const body = await request.json();
   // const validation = schema.safeParse(body);
   // if (!validation.success)
   //   return NextResponse.json(validation.error.errors, { status: 400 });
 
+  const ids = bookList.map((b: Book) => b.id);
+
   const updatedUser = await prisma.user.update({
     where: { userId: userId },
     data: {
-      bookList: bookList,
+      bookList: ids,
     },
   });
+
+  console.log(updatedUser);
   return NextResponse.json(updatedUser, { status: 200 });
 }
