@@ -15,13 +15,13 @@ const HomeRedirect = () => {
     const user = await fetch(`/api/users/${inputValue}`);
     const user2 = await user.json();
     const bookIds = user2.bookList;
+    router.push("/search");
     const books: Book[] = [];
     for (let i = 0; i < bookIds?.length; i++) {
       const book = await fetch(`/api/booksById/${bookIds[i]}`);
       books.push(await book.json());
     }
     setBookList([...books]);
-    router.push("/search");
   };
 
   return (
