@@ -5,7 +5,6 @@ import { useUser } from "../userContext";
 
 const Page = () => {
   const { user, bookList } = useUser();
-  console.log(user);
 
   return (
     <div>

@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  console.log(id);
   const book = await prisma.book.findFirst({
     where: {
       id: id,

@@ -7,7 +7,6 @@ export async function GET(
   { params }: { params: Promise<{ title: string }> }
 ) {
   const { title } = await params;
-  console.log(title);
   const book = await prisma.book.findFirst({
     where: {
       title: title.toLowerCase(),

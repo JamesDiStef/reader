@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");
-  const { user, setUser } = useUser();
+  const { user, setUser, bookList, setBookList } = useUser();
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -15,7 +15,6 @@ const HomeRedirect = () => {
     const user2 = await user.json();
     const books = user2.bookList;
     // setBookList([books]);
-    console.log(books);
     router.push("/search");
   };
 
@@ -36,9 +35,6 @@ const HomeRedirect = () => {
       >
         Go!
       </button>
-      <div className="mt-3">
-        <p>Current User: {user}</p>
-      </div>
     </div>
   );
 };

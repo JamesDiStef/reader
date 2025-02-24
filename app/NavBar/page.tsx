@@ -43,10 +43,7 @@ const NavBar = () => {
             </Link>
           ))}
           <div className="flex-grow"></div>
-          <div className="mr-5">
-            {user}
-            {bookList.length}
-          </div>
+          <div className="mr-5">{user}</div>
           {user && (
             <button className="mr-5" onClick={handleLogout}>
               Logout

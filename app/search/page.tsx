@@ -33,7 +33,6 @@ const Page = () => {
   }, []);
 
   const handleAddToList = async (b: Book) => {
-    console.log(currentBooks);
     let newBookList: Book[] = [];
     if (currentBooks !== null) newBookList = [...bookList, b];
     setBookList(newBookList);
@@ -44,7 +43,6 @@ const Page = () => {
       },
       body: JSON.stringify(newBookList),
     });
-    console.log(response);
   };
 
   return (
