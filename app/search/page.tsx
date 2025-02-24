@@ -33,7 +33,7 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    handleSearch();
+    if (allBooks && allBooks!.length > 0) handleSearch();
   }, [searchText]);
 
   const handleAddToList = async (b: Book) => {
