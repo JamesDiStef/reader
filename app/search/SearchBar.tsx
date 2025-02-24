@@ -21,7 +21,7 @@ const SearchBar = ({ searchText, setSearchText, handleSearch }: Props) => {
       <div className="flex justify-center">
         <button
           onClick={handleSearch}
-          className="bg-gray-200 text-blue-800 rounded-lg mt-2 h-10 px-3 w-40"
+          className="bg-blue-600 text-white rounded-lg mt-2 mx-auto h-12 px-6 w-48 transition-all duration-300 transform hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 active:scale-95"
         >
           Search!
         </button>

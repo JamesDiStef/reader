@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import BookFound from "../components/BookFound";
 import { UserContext } from "../userContext";
@@ -13,20 +13,29 @@ export interface Book {
 
 const Page = () => {
   const [searchText, setSearchText] = useState("");
-  const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const [currentBooks, setCurrentBooks] = useState<Book[] | null>(null);
+  const [allBooks, setAllBooks] = useState<Book[] | null>(null);
   const { user, bookList, setBookList } = useContext(UserContext);
 
-  const handleSearch = async () => {
-    const answer = await fetch(`../api/books/${searchText}`);
-    const theBook = await answer.json();
-    console.log(theBook);
-    setCurrentBook(theBook);
+  const handlePageLoad = async () => {
+    const answer = await fetch(`../api/books`);
+    const theBooks = await answer.json();
+    setAllBooks(theBooks);
+    setCurrentBooks(theBooks);
   };
 
-  const handleAddToList = async () => {
-    console.log(currentBook);
+  const handleSearch = async () => {
+    setCurrentBooks(allBooks!.filter((b) => b.title.includes(searchText)));
+  };
+
+  useEffect(() => {
+    handlePageLoad();
+  }, []);
+
+  const handleAddToList = async (b: Book) => {
+    console.log(currentBooks);
     let newBookList: Book[] = [];
-    if (currentBook) newBookList = [...bookList, currentBook];
+    if (currentBooks !== null) newBookList = [...bookList, b];
     setBookList(newBookList);
     const response = await fetch(`/api/users/${user}`, {
       method: "PUT",
@@ -39,23 +48,25 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col mx-auto ">
+    <div className="flex flex-col mx-auto w-full">
       <SearchBar
         searchText={searchText}
         setSearchText={setSearchText}
         handleSearch={handleSearch}
       />
-      {currentBook !== null && <BookFound book={currentBook} />}
-      {currentBook !== null && (
-        <div className="flex justify-center">
-          <button
-            onClick={handleAddToList}
-            className="bg-gray-200 text-blue-800 rounded-lg mt-2 h-10 px-3 w-40"
-          >
-            Add to your list
-          </button>
-        </div>
-      )}
+      <div className="grid grid-cols-4 gap-2 w-full">
+        {currentBooks?.map((b) => (
+          <div key={b.id} className="flex flex-col items-center">
+            <BookFound book={b} />
+            <button
+              onClick={() => handleAddToList(b)}
+              className="bg-blue-600 text-white rounded-lg mt-2 mx-auto h-12 px-6 w-48 transition-all duration-300 transform hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 active:scale-95"
+            >
+              Add to your list
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
