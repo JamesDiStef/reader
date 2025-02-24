@@ -8,7 +8,7 @@ const Page = () => {
   let count = 0;
 
   return (
-    <div>
+    <div className="grid grid-cols-4 gap-2 w-full">
       {bookList.map((b) => (
         <BookFound key={count++} book={b} />
       ))}
