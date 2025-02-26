@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/navigation";
-import { Book } from "./search/page";
+import { Book } from "@prisma/client";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");

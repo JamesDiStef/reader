@@ -1,3 +1,6 @@
+"use client";
+
+import { Book } from "@prisma/client";
 import {
   createContext,
   useState,
@@ -6,7 +9,6 @@ import {
   SetStateAction,
   Dispatch,
 } from "react";
-import { Book } from "./search/page";
 
 interface UserContextType {
   user: string;

@@ -1,5 +1,5 @@
-import { Book } from "@/app/search/page";
 import prisma from "@/prisma/client";
+import { Book } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
