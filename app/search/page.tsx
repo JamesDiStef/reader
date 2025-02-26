@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import BookFound from "../components/BookFound";
 import AddToListButton from "./AddToListButton";
 import { Book } from "@prisma/client";
@@ -19,7 +19,9 @@ export default async function Page(props: {
 
   return (
     <div className="flex flex-col mx-auto w-full">
-      <SearchBar />
+      <Suspense>
+        <SearchBar />
+      </Suspense>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
         {someBooks?.map((b: Book) => (
           <div key={b.id} className="flex flex-col items-center">
