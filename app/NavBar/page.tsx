@@ -19,7 +19,7 @@ const NavBar = () => {
     { title: "Home", href: "/search" },
     {
       title: "My Books",
-      href: "/users",
+      href: `/users?user=${user}`,
     },
     {
       title: "Admin Page",
