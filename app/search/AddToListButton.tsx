@@ -9,11 +9,12 @@ interface Props {
 }
 
 const AddToListButton = ({ book }: Props) => {
-  const { user, bookList } = useUser();
+  const { user, bookList, setBookList } = useUser();
 
   const handleAddToList = async () => {
     let newBookList: Book[] = [];
     newBookList = [...bookList, book];
+    setBookList(newBookList);
     await fetch(`/api/users/${user}`, {
       method: "PUT",
       headers: {

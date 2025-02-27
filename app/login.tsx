@@ -3,15 +3,25 @@
 import { useState } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/navigation";
+import { Book } from "@prisma/client";
 
 const HomeRedirect = () => {
   const [inputValue, setInputValue] = useState("");
-  const { setUser } = useUser();
+  const { setUser, setBookList } = useUser();
   const router = useRouter();
 
   const handleSubmit = async () => {
     setUser(inputValue);
     router.push("/search");
+    const response = await fetch(`/api/users/${inputValue}`);
+    const user = await response.json();
+    const bookIds = user.bookList;
+    const books: Book[] = [];
+    for (let i = 0; i < bookIds?.length; i++) {
+      const book = await fetch(`/api/booksById/${bookIds[i]}`);
+      books.push(await book.json());
+    }
+    setBookList([...books]);
   };
 
   return (
