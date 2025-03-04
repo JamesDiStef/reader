@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import SearchBar from "./SearchBar";
 import { Book } from "@prisma/client";
@@ -21,7 +23,7 @@ const SearchPageSkeleton = () => {
   return (
     <div className="flex flex-col mx-auto w-full">
       <Suspense>
-        <SearchBar />
+        <SearchBar inputValue={""} handleInput={() => {}} />
       </Suspense>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
         {someBooks?.map((b: Book) => (

@@ -1,26 +1,49 @@
-import React, { Suspense } from "react";
+"use client";
+
+import React, { Suspense, useEffect, useState } from "react";
 import BookFound from "../components/BookFound";
 import AddToListButton from "./AddToListButton";
 import { Book } from "@prisma/client";
 import SearchBar from "./SearchBar";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  // const currentPage = Number(searchParams?.page) || 1;
-  const answer = await fetch(`https://reader-teal-pi.vercel.app/api/books`);
-  const theBooks = await answer.json();
-  const someBooks = theBooks.filter((b: Book) => b.title.includes(query));
+export default function Page() {
+  const [inputValue, setInputValue] = useState("");
+
+  const [skip, setSkip] = useState(0);
+  const take = 12;
+  const [theBooks, setTheBooks] = useState<Book[]>([]);
+  const [someBooks, setSomeBooks] = useState(
+    theBooks.filter((b: Book) => b.title.includes(inputValue))
+  );
+
+  const fetchMoreBooks = async () => {
+    setSkip(skip + theBooks.length);
+    const answer = await fetch(
+      // `https://reader-teal-pi.vercel.app/api/books?skip=${skip}&take=${take}`
+      `http://localhost:3000/api/books?skip=${
+        skip + theBooks.length
+      }&take=${take}`
+    );
+
+    const books = await answer.json();
+    setTheBooks([...theBooks, ...books]);
+    setSomeBooks(
+      [...theBooks, ...books].filter((b: Book) => b.title.includes(inputValue))
+    );
+  };
+
+  const handleInput = (newVal: string) => {
+    setInputValue(newVal);
+  };
+
+  useEffect(() => {
+    fetchMoreBooks();
+  }, []);
 
   return (
     <div className="flex flex-col mx-auto w-full">
       <Suspense>
-        <SearchBar />
+        <SearchBar inputValue={inputValue} handleInput={handleInput} />
       </Suspense>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
         {someBooks?.map((b: Book) => (
@@ -30,6 +53,12 @@ export default async function Page(props: {
           </div>
         ))}
       </div>
+      <button
+        className="rounded-lg p-3 bg-red-700"
+        onClick={() => fetchMoreBooks()}
+      >
+        Fetch More Books
+      </button>
     </div>
   );
 }
