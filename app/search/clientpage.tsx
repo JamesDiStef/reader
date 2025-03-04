@@ -13,7 +13,6 @@ interface Props {
 
 export default function ClientPage({ starterData }: Props) {
   const [inputValue, setInputValue] = useState("");
-
   const [isLoaded, setIsLoaded] = useState(false);
   const take = 12;
   const [theBooks, setTheBooks] = useState<Book[]>(starterData);
@@ -36,9 +35,27 @@ export default function ClientPage({ starterData }: Props) {
     fetchMoreBooks(newVal);
   };
 
+  const handleScroll = async () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollHeight - scrollTop <= clientHeight) {
+      await fetchMoreBooks(inputValue);
+    }
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   if (!isLoaded) return <SearchPageSkeleton />;
   return (
@@ -54,12 +71,6 @@ export default function ClientPage({ starterData }: Props) {
           </div>
         ))}
       </div>
-      <button
-        className="rounded-lg p-3 bg-red-700"
-        onClick={() => fetchMoreBooks(inputValue)}
-      >
-        Fetch More Books
-      </button>
     </div>
   );
 }
