@@ -34,6 +34,7 @@ export default function Page() {
 
   const handleInput = (newVal: string) => {
     setInputValue(newVal);
+    setSomeBooks(theBooks.filter((b: Book) => b.title.includes(newVal)));
   };
 
   useEffect(() => {
