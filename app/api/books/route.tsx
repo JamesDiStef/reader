@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const skip = parseInt(url.searchParams.get("skip") || "0");
-  const take = parseInt(url.searchParams.get("take") || "10");
+  const take = parseInt(url.searchParams.get("take") || "15");
   const searchString = url.searchParams.get("searchString") || "";
 
   const books = await prisma.book.findMany({
@@ -19,12 +19,12 @@ export async function GET(request: NextRequest) {
             mode: "insensitive",
           },
         },
-        {
-          author: {
-            contains: searchString,
-            mode: "insensitive",
-          },
-        },
+        // {
+        //   author: {
+        //     contains: searchString,
+        //     mode: "insensitive",
+        //   },
+        // },
       ],
     },
   });
