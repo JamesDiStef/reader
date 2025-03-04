@@ -23,6 +23,7 @@ export default function Page() {
 
   const handleInput = (newVal: string) => {
     setInputValue(newVal);
+    fetchMoreBooks();
   };
 
   useEffect(() => {
