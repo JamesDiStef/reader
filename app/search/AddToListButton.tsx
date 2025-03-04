@@ -3,6 +3,7 @@
 import { Book } from "@prisma/client";
 import React from "react";
 import { useUser } from "../userContext";
+import { useRouter } from "next/navigation";
 
 interface Props {
   book: Book;
@@ -10,8 +11,10 @@ interface Props {
 
 const AddToListButton = ({ book }: Props) => {
   const { user, bookList, setBookList } = useUser();
+  const router = useRouter();
 
   const handleAddToList = async () => {
+    if (!user) router.push("/");
     let newBookList: Book[] = [];
     newBookList = [...bookList, book];
     setBookList(newBookList);
