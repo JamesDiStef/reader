@@ -4,17 +4,32 @@ import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
-  const skip = parseInt("" + url.searchParams.get("skip"));
-  const take = parseInt("" + url.searchParams.get("take"));
+  const skip = parseInt(url.searchParams.get("skip") || "0");
+  const take = parseInt(url.searchParams.get("take") || "10");
+  const searchString = url.searchParams.get("searchString") || "";
 
-  console.log(skip, take);
-
-  const users = await prisma.book.findMany({
+  const books = await prisma.book.findMany({
     skip: skip,
     take: take,
+    where: {
+      OR: [
+        {
+          title: {
+            contains: searchString,
+            mode: "insensitive",
+          },
+        },
+        {
+          author: {
+            contains: searchString,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
   });
 
-  return NextResponse.json(users);
+  return NextResponse.json(books);
 }
 
 export async function POST(request: NextRequest) {

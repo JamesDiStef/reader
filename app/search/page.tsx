@@ -9,32 +9,20 @@ import SearchBar from "./SearchBar";
 export default function Page() {
   const [inputValue, setInputValue] = useState("");
 
-  const [skip, setSkip] = useState(0);
   const take = 12;
   const [theBooks, setTheBooks] = useState<Book[]>([]);
-  const [someBooks, setSomeBooks] = useState(
-    theBooks.filter((b: Book) => b.title.includes(inputValue))
-  );
 
   const fetchMoreBooks = async () => {
-    setSkip(skip + theBooks.length);
     const answer = await fetch(
-      // `https://reader-teal-pi.vercel.app/api/books?skip=${skip}&take=${take}`
-      `http://localhost:3000/api/books?skip=${
-        skip + theBooks.length
-      }&take=${take}`
+      `https://reader-teal-pi.vercel.app/api/books?skip=0&take=${take}&searchString=${inputValue}`
     );
 
     const books = await answer.json();
-    setTheBooks([...theBooks, ...books]);
-    setSomeBooks(
-      [...theBooks, ...books].filter((b: Book) => b.title.includes(inputValue))
-    );
+    setTheBooks(books);
   };
 
   const handleInput = (newVal: string) => {
     setInputValue(newVal);
-    setSomeBooks(theBooks.filter((b: Book) => b.title.includes(newVal)));
   };
 
   useEffect(() => {
@@ -47,7 +35,7 @@ export default function Page() {
         <SearchBar inputValue={inputValue} handleInput={handleInput} />
       </Suspense>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
-        {someBooks?.map((b: Book) => (
+        {theBooks?.map((b: Book) => (
           <div key={b.id} className="flex flex-col items-center">
             <BookFound book={b} />
             <AddToListButton book={b} />
