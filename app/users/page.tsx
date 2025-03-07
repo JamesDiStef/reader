@@ -1,5 +1,5 @@
 import { Book } from "@prisma/client";
-import BookFound from "../components/BookFound";
+import MyBook from "./MyBook";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -27,7 +27,7 @@ export default async function Page(props: {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full">
       {books.map((b) => (
-        <BookFound key={count++} book={b} />
+        <MyBook key={count++} book={b} />
       ))}
     </div>
   );
