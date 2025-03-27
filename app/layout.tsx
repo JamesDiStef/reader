@@ -45,7 +45,9 @@ export default function RootLayout({
     <html lang="en" data-theme="winter">
       <body style={style}>
         <UserProvider>
-          <NavBar />
+          <div className="sticky top-0 z-50 bg-white shadow-md">
+            <NavBar />
+          </div>
           <main className="p-5">{children}</main>
         </UserProvider>
       </body>
